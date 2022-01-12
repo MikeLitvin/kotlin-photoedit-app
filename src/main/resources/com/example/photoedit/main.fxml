@@ -1,7 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.photoedit.PhotoeditController">
-</VBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="com.example.photoedit.PhotoeditController">
+    <center>
+        <ScrollPane fx:id="sceneScrollBox" prefHeight="720.0" prefWidth="1000.0">
+            <content>
+                <AnchorPane fx:id="sceneContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10000.0" prefWidth="10000.0" />
+            </content>
+        </ScrollPane>
+    </center>
+    <left>
+        <ScrollPane fx:id="menuScroll" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="menuContainer" alignment="CENTER" prefHeight="584.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Button fx:id="floatNodeButton" mnemonicParsing="false" text="FLOAT">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="intNodeButton" layoutX="46.0" layoutY="20.0" mnemonicParsing="false" text="INT">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="stringNodeButton" layoutX="46.0" layoutY="76.0" mnemonicParsing="false" text="STRING">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="imageNodeButton" layoutX="20.0" layoutY="86.0" mnemonicParsing="false" text="IMAGE">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="addTextNodeButton" layoutX="20.0" layoutY="86.0" mnemonicParsing="false" text="ADD TEXT">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="addImageNodeButton" layoutX="20.0" layoutY="86.0" mnemonicParsing="false" text="ADD IMAGE">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+
+                        <Button fx:id="grayNodeButton" layoutX="20.0" layoutY="86.0" mnemonicParsing="false" text="GRAY">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                  <Button fx:id="brightnessNodeButton" mnemonicParsing="false" text="BRIGHTNESS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sepiaNodeButton" mnemonicParsing="false" text="SEPIA">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="invertNodeButton" mnemonicParsing="false" text="INVERT">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="blurNodeButton" mnemonicParsing="false" text="BLUR">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="moveNodeButton" mnemonicParsing="false" text="MOVE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="scaleNodeButton" mnemonicParsing="false" text="SCALE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="rotateNodeButton" mnemonicParsing="false" text="ROTATE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </left>
+</BorderPane>
