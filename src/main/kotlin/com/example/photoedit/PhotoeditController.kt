@@ -2,22 +2,14 @@ package com.example.photoedit
 
 import javafx.fxml.FXML
 import javafx.scene.control.Button
-import javafx.scene.control.ScrollPane
+import javafx.scene.input.DataFormat
 import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.VBox
+import nu.pattern.OpenCV
 
 class PhotoeditController {
-    @FXML
-    private lateinit var sceneSrollBox: ScrollPane
 
     @FXML
     private lateinit var sceneContainer: AnchorPane
-
-    @FXML
-    private lateinit var menuScroll: ScrollPane
-
-    @FXML
-    private lateinit var menuContainer: VBox
 
     @FXML
     private lateinit var floatNodeButton: Button
@@ -61,52 +53,56 @@ class PhotoeditController {
     @FXML
     private lateinit var rotateNodeButton: Button
 
-    fun addNode(){
-
+    private fun <T> addNode(node: node<T>) {
+        sceneContainer.children.add(node)
     }
 
+    private val node = DataFormat("node")
+    private val link = DataFormat("link")
+
     fun initialize(){
+        OpenCV.loadLocally()
         floatNodeButton.setOnAction {
-            addNode()
+//            addNode(float(node, link))
         }
         intNodeButton.setOnAction{
-            addNode()
+//            addNode(int(node, link))
         }
         stringNodeButton.setOnAction{
-            addNode()
+//            addNode(string(node, link))
         }
         imageNodeButton.setOnAction{
-            addNode()
+//            addNode(imageNode(node, link))
         }
         addTextNodeButton.setOnAction{
-            addNode()
+//            addNode(addText(node, link))
         }
         addImageNodeButton.setOnAction{
-            addNode()
+//            addNode(addImage(node, link))
         }
         grayNodeButton.setOnAction{
-            addNode()
+//            addNode(gray(node, link))
         }
         brightnessNodeButton.setOnAction{
-            addNode()
+//            addNode(brightness(node, link))
         }
         sepiaNodeButton.setOnAction{
-            addNode()
+//            addNode(sepia(node, link))
         }
         invertNodeButton.setOnAction{
-            addNode()
+//            addNode(invert(node, link))
         }
         blurNodeButton.setOnAction{
-            addNode()
+//            addNode(blur(node, link))
         }
         moveNodeButton.setOnAction{
-            addNode()
+//            addNode(move(node, link))
         }
         scaleNodeButton.setOnAction{
-            addNode()
+//            addNode(scale(node, link))
         }
         rotateNodeButton.setOnAction{
-            addNode()
+//            addNode(rotation(node, link))
         }
     }
 }
