@@ -10,7 +10,7 @@ import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javax.imageio.ImageIO
 
-open class imageNode(nodeState: DataFormat, linkState: DataFormat): baseImageNode(nodeState, linkState) {
+open class ImageNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeState, linkState) {
     @FXML
     override fun initialize() {
         super.initialize()
@@ -24,7 +24,7 @@ open class imageNode(nodeState: DataFormat, linkState: DataFormat): baseImageNod
             valueProperty.set(img)
             image.image = valueProperty.value
         }
-        val output = outLink<Image>()
+        val output = OutLink<Image>()
         output.onDragDetected = linkDragDetectedHandler
         grid.add(output, 2, 2)
     }

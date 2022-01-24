@@ -53,7 +53,7 @@ class PhotoeditController {
     @FXML
     private lateinit var rotateNodeButton: Button
 
-    private fun <T> addNode(node: node<T>) { sceneContainer.children.add(node) }
+    private fun <T> addNode(node: Node<T>) { sceneContainer.children.add(node) }
 
     private val node = DataFormat("node")
     private val link = DataFormat("link")
@@ -63,56 +63,56 @@ class PhotoeditController {
 
         // Можно добавлять к нодам эффектов все необходимые ноды (?)
 
-        addNode(startNode(node, link).also {
+        addNode(StartNode(node, link).also {
             it.layoutY = 150.0
         })
-        addNode(endNode(node, link).also {
+        addNode(EndNode(node, link).also {
             it.layoutX = 980.0
         }.also {
             it.layoutY = 150.0
         })
 
         floatNodeButton.setOnAction {
-            addNode(float(node, link))
+            addNode(FloatValue(node, link))
         }
         intNodeButton.setOnAction{
-            addNode(int(node, link))
+            addNode(IntValue(node, link))
         }
         stringNodeButton.setOnAction{
-            addNode(string(node, link))
+            addNode(StringValue(node, link))
         }
         imageNodeButton.setOnAction{
-            addNode(imageNode(node, link))
+            addNode(ImageNode(node, link))
         }
         addTextNodeButton.setOnAction{
-            addNode(addText(node, link))
+            addNode(AddText(node, link))
         }
         addImageNodeButton.setOnAction{
-            addNode(addImage(node, link))
+            addNode(AddImage(node, link))
         }
         grayNodeButton.setOnAction{
-            addNode(gray(node, link))
+            addNode(Gray(node, link))
         }
         brightnessNodeButton.setOnAction{
-            addNode(brightness(node, link))
+            addNode(Brightness(node, link))
         }
         sepiaNodeButton.setOnAction{
-            addNode(sepia(node, link))
+            addNode(Sepia(node, link))
         }
         invertNodeButton.setOnAction{
-            addNode(invert(node, link))
+            addNode(Invert(node, link))
         }
         blurNodeButton.setOnAction{
-            addNode(blur(node, link))
+            addNode(Blur(node, link))
         }
         moveNodeButton.setOnAction{
-            addNode(move(node, link))
+            addNode(Move(node, link))
         }
         scaleNodeButton.setOnAction{
-            addNode(scale(node, link))
+            addNode(Scale(node, link))
         }
         rotateNodeButton.setOnAction{
-            addNode(rotation(node, link))
+            addNode(Rotation(node, link))
         }
     }
 }

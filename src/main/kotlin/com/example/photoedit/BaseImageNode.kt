@@ -9,8 +9,8 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.DataFormat
 import javafx.scene.layout.GridPane
 
-abstract class baseImageNode(node: DataFormat, link: DataFormat): valueNode<Image>(node, link,
-        FXMLLoader(baseImageNode::class.java.getResource("image.fxml")))
+abstract class BaseImageNode(node: DataFormat, link: DataFormat): ValueNode<Image>(node, link,
+        FXMLLoader(BaseImageNode::class.java.getResource("image.fxml")))
 {
     @FXML
     lateinit var image: ImageView

@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.StackPane
 
-class Prerender(parent: endNode): AnchorPane() {
+class Prerender(parent: EndNode): AnchorPane() {
     private val imageView = ImageView()
 
     init {

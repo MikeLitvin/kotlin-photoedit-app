@@ -7,7 +7,7 @@ import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 
-class sepia(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState) {
+class Sepia(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
     private lateinit var mSepiaKernel: Mat
 
     @FXML

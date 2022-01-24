@@ -12,15 +12,15 @@ import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
 
-class rotation(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState){
-    private lateinit var angle: inputLink<Float?>
+class Rotation(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+    private lateinit var angle: InputLink<Float?>
 
     @FXML
     override fun setTitle() { nodeName.text = "Rotate" }
 
     override fun initialize() {
         super.initialize()
-        angle = inputLink(null)
+        angle = InputLink(null)
         inputs = mapOf(Pair(angle, "Angle"))
         addInputs(3)
         bindInputs()

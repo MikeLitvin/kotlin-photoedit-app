@@ -13,7 +13,7 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.CubicCurve
 
-class linker<T>(private val source: node<T>): AnchorPane() {
+class Linker<T>(private val source: Node<T>): AnchorPane() {
     @FXML
     lateinit var link: CubicCurve
 
@@ -26,7 +26,7 @@ class linker<T>(private val source: node<T>): AnchorPane() {
 
     val valueProperty = SimpleObjectProperty<T>()
     var isConnected: Boolean = false
-    var destination: inputLink<T>? = null
+    var destination: InputLink<T>? = null
 
     @FXML
     fun initialize() {
@@ -46,8 +46,8 @@ class linker<T>(private val source: node<T>): AnchorPane() {
         link.endY = point.y
     }
 
-    fun <T> bindStart(source: outLink<T>) { bindLayoutProperty(source, link.startXProperty(), link.startYProperty()) }
-    fun <T> bindEnd(source: inputLink<T>) { bindLayoutProperty(source, link.endXProperty(), link.endYProperty()) }
+    fun <T> bindStart(source: OutLink<T>) { bindLayoutProperty(source, link.startXProperty(), link.startYProperty()) }
+    fun <T> bindEnd(source: InputLink<T>) { bindLayoutProperty(source, link.endXProperty(), link.endYProperty()) }
 
     fun unbindEnd() {
         link.endXProperty().unbind()
@@ -75,10 +75,10 @@ class linker<T>(private val source: node<T>): AnchorPane() {
     }
 }
 
-class inputLink<T>(initialValue: T?): AnchorPane() {
+class InputLink<T>(initialValue: T?): AnchorPane() {
     val valueProperty = SimpleObjectProperty(initialValue)
     var defaultValue: T? = initialValue
-    var connectedLink: linker<T>? = null
+    var connectedLink: Linker<T>? = null
     val isConnected: Boolean
     get() = connectedLink != null
     init {
@@ -91,7 +91,7 @@ class inputLink<T>(initialValue: T?): AnchorPane() {
     }
 }
 
-class outLink<T>: AnchorPane() {
+class OutLink<T>: AnchorPane() {
     init {
         setPrefSize(10.0, 10.0)
         setMaxSize(10.0, 10.0)

@@ -8,8 +8,8 @@ import javafx.scene.input.DataFormat
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.VBox
 
-abstract class valueNode<T>(nodeState: DataFormat, linkState: DataFormat, loader: FXMLLoader):
-    node<T>(nodeState, linkState, loader) {
+abstract class ValueNode<T>(nodeState: DataFormat, linkState: DataFormat, loader: FXMLLoader):
+    Node<T>(nodeState, linkState, loader) {
     @FXML
     lateinit var nodeName: Label
 
@@ -30,7 +30,7 @@ abstract class valueNode<T>(nodeState: DataFormat, linkState: DataFormat, loader
         draggedArea.onDragDetected = dragDetectedHandler
         deleteButton.setOnAction {
             (parent as AnchorPane).children.remove(this)
-            for(link: linker<T> in connectedLinks) removeLink(link)
+            for(link: Linker<T> in connectedLinks) removeLink(link)
             removeLink(link)
         }
     }

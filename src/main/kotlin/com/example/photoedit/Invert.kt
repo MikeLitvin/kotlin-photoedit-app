@@ -6,7 +6,7 @@ import javafx.scene.image.Image
 import javafx.scene.input.DataFormat
 import java.awt.Color
 
-class invert(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState) {
+class Invert(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
 
     @FXML
     override fun setTitle() { nodeName.text = "Invert" }

@@ -4,16 +4,14 @@ import javafx.fxml.FXML
 import javafx.scene.image.Image
 import javafx.scene.input.DataFormat
 
-class brightness(nodeState: DataFormat, linkState: DataFormat) : filter(nodeState, linkState) {
-    private lateinit var brightnessLevel: inputLink<Float?>
+class Brightness(nodeState: DataFormat, linkState: DataFormat) : Filter(nodeState, linkState) {
+    private lateinit var brightnessLevel: InputLink<Float?>
 
     @FXML
-    override fun setTitle() {
-        nodeName.text = "Brightness"
-    }
+    override fun setTitle() { nodeName.text = "Brightness" }
     override fun initialize() {
         super.initialize()
-        brightnessLevel = inputLink(null)
+        brightnessLevel = InputLink(null)
         inputs = mapOf(Pair(brightnessLevel, "Level"))
         addInputs(3)
         bindInputs()

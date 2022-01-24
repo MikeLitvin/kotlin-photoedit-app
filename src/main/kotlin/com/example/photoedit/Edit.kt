@@ -4,10 +4,11 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.TextField
 import javafx.scene.input.DataFormat
+import kotlin.String
 
-abstract class edit<T>(nodeState: DataFormat, linkState: DataFormat, private val validatorRegex: Regex):
-    valueNode<T>(nodeState, linkState, FXMLLoader(edit::class.java.getResource("editor.fxml"))) {
-    protected lateinit var toOutput: outLink<T>
+abstract class Edit<T>(nodeState: DataFormat, linkState: DataFormat, private val validatorRegex: Regex):
+    ValueNode<T>(nodeState, linkState, FXMLLoader(Edit::class.java.getResource("editor.fxml"))) {
+    protected lateinit var toOutput: OutLink<T>
 
     @FXML
     protected lateinit var editField: TextField
@@ -15,7 +16,7 @@ abstract class edit<T>(nodeState: DataFormat, linkState: DataFormat, private val
     @FXML
     override fun initialize() {
         super.initialize()
-        toOutput = outLink()
+        toOutput = OutLink()
         toOutput.onDragDetected = linkDragDetectedHandler
         outputLayout.children.add(toOutput)
         draggedArea.onDragDetected = dragDetectedHandler

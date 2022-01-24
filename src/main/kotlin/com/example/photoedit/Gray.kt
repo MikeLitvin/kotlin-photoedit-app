@@ -6,7 +6,7 @@ import javafx.scene.input.DataFormat
 import org.opencv.core.Mat
 import org.opencv.imgproc.Imgproc
 
-class gray(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState) {
+class Gray(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
 
     @FXML
     override fun setTitle() { nodeName.text = "Gray Filter" }

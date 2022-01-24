@@ -7,21 +7,21 @@ import javafx.scene.input.DataFormat
 import java.awt.Color
 import java.awt.Font
 
-class addText(node: DataFormat, link: DataFormat): filter(node, link) {
-    private lateinit var x: inputLink<Int?>
-    private lateinit var y: inputLink<Int?>
-    private lateinit var fontSize: inputLink<Int?>
-    private lateinit var text: inputLink<String?>
+class AddText(node: DataFormat, link: DataFormat): Filter(node, link) {
+    private lateinit var x: InputLink<Int?>
+    private lateinit var y: InputLink<Int?>
+    private lateinit var fontSize: InputLink<Int?>
+    private lateinit var text: InputLink<String?>
 
     @FXML
     override fun setTitle() { nodeName.text = "Add Text" }
 
     override fun initialize() {
         super.initialize()
-        x = inputLink(null)
-        y = inputLink(null)
-        text = inputLink(null)
-        fontSize = inputLink(null)
+        x = InputLink(null)
+        y = InputLink(null)
+        text = InputLink(null)
+        fontSize = InputLink(null)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"), Pair(text, "Text"), Pair(fontSize, "Size"))
         addInputs(3)
         bindInputs()

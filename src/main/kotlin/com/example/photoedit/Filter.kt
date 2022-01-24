@@ -7,16 +7,16 @@ import javafx.scene.input.DataFormat
 import javafx.scene.layout.RowConstraints
 import javafx.scene.text.Font
 
-abstract class filter(node: DataFormat, link: DataFormat): baseImageNode(node, link) {
-    lateinit var inputImage: inputLink<Image>
-    lateinit var outputImage: outLink<Image>
-    lateinit var inputs: Map<inputLink<*>, String>
+abstract class Filter(node: DataFormat, link: DataFormat): BaseImageNode(node, link) {
+    lateinit var inputImage: InputLink<Image>
+    lateinit var outputImage: OutLink<Image>
+    lateinit var inputs: Map<InputLink<*>, String>
 
     @FXML
     override fun initialize() {
         super.initialize()
         setTitle()
-        inputImage = inputLink(null)
+        inputImage = InputLink(null)
         inputImage.valueProperty.addListener { _, _, newValue ->
             val filteredImage = filterImage(newValue)
             valueProperty.value = filteredImage
@@ -27,7 +27,7 @@ abstract class filter(node: DataFormat, link: DataFormat): baseImageNode(node, l
         inputImage.onDragDropped = linkDragDroppedHandler
         grid.add(inputImage, 0, 2)
 
-        outputImage = outLink()
+        outputImage = OutLink()
         outputImage.onDragDetected = linkDragDetectedHandler
         grid.add(outputImage, 2, 2)
     }

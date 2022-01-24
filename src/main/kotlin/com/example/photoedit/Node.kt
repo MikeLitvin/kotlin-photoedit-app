@@ -7,7 +7,7 @@ import javafx.scene.input.*
 import javafx.scene.layout.AnchorPane
 
 
-abstract class node<T>(private val nodeState: DataFormat, private val linkState: DataFormat, loader: FXMLLoader):
+abstract class Node<T>(private val nodeState: DataFormat, private val linkState: DataFormat, loader: FXMLLoader):
     AnchorPane() {
 
     private val dragOverHandler = EventHandler<DragEvent> { event ->
@@ -54,7 +54,7 @@ abstract class node<T>(private val nodeState: DataFormat, private val linkState:
             parent.onDragOver = contextLinkDragOverHandler
             parent.onDragDropped = contextLinkDragDroppedHandler
             link.isVisible = true
-            link.bindStart(event.source as outLink<*>)
+            link.bindStart(event.source as OutLink<*>)
             superParent!!.children.add(0, link)
             val content = ClipboardContent()
             content[linkState] = "link"
@@ -67,9 +67,9 @@ abstract class node<T>(private val nodeState: DataFormat, private val linkState:
     val linkDragDroppedHandler = EventHandler<DragEvent> { event ->
         parent.onDragOver = null
         parent.onDragDropped = null
-        val linkDestination = event.source as inputLink<T>
-        val linkSource = event.gestureSource as node<T>
-        val connectedLink = (event.gestureSource as node<T>).link
+        val linkDestination = event.source as InputLink<T>
+        val linkSource = event.gestureSource as Node<T>
+        val connectedLink = (event.gestureSource as Node<T>).link
         if(connectedLink.valueProperty::class == linkDestination.valueProperty::class && !linkDestination.isConnected
             && linkSource != this) {
             connectedLink.bindEnd(linkDestination)
@@ -93,16 +93,16 @@ abstract class node<T>(private val nodeState: DataFormat, private val linkState:
 
     private var offset = Point2D(0.0, 0.0)
     private var superParent: AnchorPane? = null
-    var link = linker(this)
+    var link = Linker(this)
     var value: T? = null
-    protected val connectedLinks = mutableListOf<linker<T>>()
+    protected val connectedLinks = mutableListOf<Linker<T>>()
 
     private fun moveTo(point: Point2D) {
         val local = parent.sceneToLocal(point)
         relocate((local.x - offset.x), (local.y - offset.y))
     }
 
-    fun removeLink(link: linker<T>) {
+    fun removeLink(link: Linker<T>) {
         superParent!!.children.remove(link)
         link.isConnected = false
         link.unbindEnd()

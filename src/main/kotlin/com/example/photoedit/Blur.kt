@@ -12,15 +12,15 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import java.io.ByteArrayInputStream
 
-class blur(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState) {
-    private lateinit var kernelSizeValue: inputLink<Int?>
+class Blur(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
+    private lateinit var kernelSizeValue: InputLink<Int?>
 
     @FXML
     override fun setTitle() { nodeName.text = "Blur" }
 
     override fun initialize() {
         super.initialize()
-        kernelSizeValue = inputLink(null)
+        kernelSizeValue = InputLink(null)
         inputs = mapOf(Pair(kernelSizeValue, "Kernel size"))
         addInputs(3)
         bindInputs()

@@ -7,17 +7,17 @@ import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.imgproc.Imgproc
 
-class move(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState){
-    private lateinit var x: inputLink<Float?>
-    private lateinit var y: inputLink<Float?>
+class Move(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+    private lateinit var x: InputLink<Float?>
+    private lateinit var y: InputLink<Float?>
 
     @FXML
     override fun setTitle() { nodeName.text = "Move" }
 
     override fun initialize() {
         super.initialize()
-        x = inputLink(null)
-        y = inputLink(null)
+        x = InputLink(null)
+        y = InputLink(null)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"))
         addInputs(3)
         bindInputs()

@@ -12,7 +12,7 @@ import javax.imageio.ImageIO
 import javafx.scene.input.DataFormat
 import javafx.scene.layout.RowConstraints
 
-class endNode(nodeState: DataFormat, linkState: DataFormat): baseImageNode(nodeState, linkState) {
+class EndNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeState, linkState) {
     private var prerender: Prerender? = null
 
     @FXML
@@ -21,7 +21,7 @@ class endNode(nodeState: DataFormat, linkState: DataFormat): baseImageNode(nodeS
 
         nodeName.text = "End Node"
 
-        val input = inputLink(image.image)
+        val input = InputLink(image.image)
         input.onDragDropped = linkDragDroppedHandler
         input.valueProperty.addListener { _, _, newValue ->
             valueProperty.value = newValue

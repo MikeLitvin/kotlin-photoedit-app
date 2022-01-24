@@ -9,17 +9,17 @@ import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import kotlin.math.floor
 
-class scale(nodeState: DataFormat, linkState: DataFormat): filter(nodeState, linkState){
-    private lateinit var x: inputLink<Float?>
-    private lateinit var y: inputLink<Float?>
+class Scale(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+    private lateinit var x: InputLink<Float?>
+    private lateinit var y: InputLink<Float?>
 
     @FXML
     override fun setTitle() { nodeName.text = "Scale" }
 
     override fun initialize() {
         super.initialize()
-        x = inputLink(null)
-        y = inputLink(null)
+        x = InputLink(null)
+        y = InputLink(null)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"))
         addInputs(3)
         bindInputs()
