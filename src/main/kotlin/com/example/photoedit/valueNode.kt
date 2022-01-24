@@ -8,7 +8,7 @@ import javafx.scene.input.DataFormat
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.VBox
 
-abstract class value<T>(nodeState: DataFormat, linkState: DataFormat, loader: FXMLLoader):
+abstract class valueNode<T>(nodeState: DataFormat, linkState: DataFormat, loader: FXMLLoader):
     node<T>(nodeState, linkState, loader) {
     @FXML
     lateinit var nodeName: Label
