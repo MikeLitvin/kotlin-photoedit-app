@@ -74,7 +74,7 @@ class Linker<T>(val source: Node<T>): AnchorPane() {
     }
 
     init {
-        val fxmlLoader = FXMLLoader(javaClass.getResource("linker.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.getResource("Linker.fxml"))
         fxmlLoader.setRoot(this)
         fxmlLoader.setController(this)
         fxmlLoader.load<Any>()

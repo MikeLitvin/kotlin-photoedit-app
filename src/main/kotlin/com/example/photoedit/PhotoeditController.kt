@@ -119,15 +119,20 @@ class PhotoeditController {
             scene = scene.load(json)
             clearScene()
             val nodesIterator = scene.nodes.iterator()
-            for(node in nodesIterator) { sceneContainer.children.add(node) }
+            for(node in nodesIterator) {
+                sceneContainer.children.add(node)
+//                loadLinks()
+            }
             loadLinks()
         }
     }
     private fun clearScene() { sceneContainer.children.clear() }
 
-    private fun loadLinks() { for (nodeConnections in scene.connections) {
+    private fun loadLinks() {
+        for (nodeConnections in scene.connections) {
             val node = scene.findNodeById(nodeConnections.id.toUInt())
-            node?.let { for (connectionKey in nodeConnections.connections) {
+            node?.let {
+                for (connectionKey in nodeConnections.connections) {
                     val connectedNode = scene.findNodeById(connectionKey.nodeId.toUInt())
                     connectedNode.let {
                         val connectedLink = connectedNode!!.link
@@ -143,7 +148,10 @@ class PhotoeditController {
                                 node.loadLink(connectedLink as Linker<String?>, currentInput as InputLink<String?>)
 
                             connectedLink.valueProperty.value is BufferedImage? && currentInput.valueProperty.value is BufferedImage? ->
-                                node.loadLink(connectedLink as Linker<BufferedImage?>, currentInput as InputLink<BufferedImage?>)
+                                node.loadLink(
+                                    connectedLink as Linker<BufferedImage?>,
+                                    currentInput as InputLink<BufferedImage?>
+                                )
                         }
                     }
                 }

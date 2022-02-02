@@ -9,6 +9,6 @@ module com.example.photoedit {
     requires javafx.swing;
     requires com.google.gson;
 
-    opens com.example.photoedit to javafx.fxml;
+    opens com.example.photoedit to javafx.fxml, com.google.gson;
     exports com.example.photoedit;
 }

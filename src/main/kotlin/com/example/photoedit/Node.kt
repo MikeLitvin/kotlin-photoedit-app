@@ -91,15 +91,9 @@ abstract class Node<T>(private val nodeState: DataFormat, private val linkState:
         val linkDestination = event.source as InputLink<T>
         val linkSource = event.gestureSource as Node<T>
         val connectedLink = (event.gestureSource as Node<T>).link
-        if(connectedLink.valueProperty::class == linkDestination.valueProperty::class && !linkDestination.isConnected
-            && linkSource != this) {
+        if(connectedLink.valueProperty::class == linkDestination.valueProperty::class && !linkDestination.isConnected && linkSource != this) {
             connectLink(connectedLink, linkDestination)
-//            connectedLink.bindEnd(linkDestination)
-//            connectedLink.isConnected = true
-//            connectedLink.destination = linkDestination
-//            linkDestination.valueProperty.set(connectedLink.valueProperty.value)
-//            linkDestination.connectedLink = connectedLink
-//            connectedLinks.add(connectedLink)
+
             val content = ClipboardContent()
             content[linkState] = "link"
             startDragAndDrop(*TransferMode.ANY).setContent(content)
@@ -144,15 +138,16 @@ abstract class Node<T>(private val nodeState: DataFormat, private val linkState:
     ) {
         connectedLink.bindEnd(linkDestination)
         connectedLink.isConnected = true
+        connectedLink.link.isVisible = true
         connectedLink.destination = linkDestination
         linkDestination.valueProperty.set(connectedLink.valueProperty.value)
         linkDestination.connectedLink = connectedLink
         connectedLinks.add(connectedLink)
 
-        val content = ClipboardContent()
-
-        content[linkState] = "link"
-        startDragAndDrop(*TransferMode.ANY).setContent(content)
+//        val content = ClipboardContent()
+//
+//        content[linkState] = "link"
+//        startDragAndDrop(*TransferMode.ANY).setContent(content)
     }
 
     fun <E> loadLink(

@@ -1,5 +1,6 @@
 package com.example.photoedit
 
+import com.example.photoedit.Node
 import javafx.scene.input.DataFormat
 import com.google.gson.*
 import javafx.geometry.Bounds
@@ -14,20 +15,12 @@ import java.lang.reflect.Type
         val nodes: MutableList<Node<*>> = mutableListOf()
         val connections: MutableList<InputLinksState> = mutableListOf()
 
-        fun add(node: Node<*>) {
-            nodes.add(node)
-        }
+        fun add(node: Node<*>) { nodes.add(node) }
 
-        fun remove(node: Node<*>) {
-            nodes.remove(node)
-        }
+        fun remove(node: Node<*>) { nodes.remove(node) }
 
         fun findNodeById(id: UInt): Node<*>? {
-            for(node in nodes) {
-                if (node.id == id) {
-                    return node
-                }
-            }
+            for(node in nodes) { if (node.id == id) { return node } }
             return null
         }
 
@@ -39,8 +32,6 @@ import java.lang.reflect.Type
                 .registerTypeAdapter(Scene::class.java, SceneSerializer())
                 .registerTypeAdapter(NodeState::class.java, NodeSerializer())
                 .create()
-
-            println(gson.toJson(this))
             return gson.toJson(this)
         }
 
@@ -49,9 +40,7 @@ import java.lang.reflect.Type
                 .registerTypeAdapter(Scene::class.java, SceneDeserializer(nodeState, linkState))
                 .registerTypeAdapter(Node::class.java, NodeDeserializer(nodeState, linkState))
                 .create()
-
             return gson.fromJson(json, Scene::class.java)
-
         }
     }
 
@@ -109,9 +98,7 @@ class NodeDeserializer(
                     else ImageIO.read(ByteArrayInputStream(jo.getAsJsonArray("value").toByteArray()))
                     ImageNode(nodeState, linkState, id).also { it.load(x, y, bufImage) }
                 }
-                EndNodeType -> {
-                    EndNode(nodeState, linkState, id).also { it.load(x, y, null) }
-                }
+                EndNodeType -> { EndNode(nodeState, linkState, id).also { it.load(x, y, null) } }
                 StartNodeType -> {
                     val value = jo.get("value")
                     val bufImage: BufferedImage? = if (value == null) null
@@ -176,7 +163,10 @@ class SceneDeserializer(val nodeState: DataFormat, val linkState: DataFormat): J
 
             val jsonConnections = jo.getAsJsonArray("connections")
 
-            for (jsonNodeConnections in jsonConnections) { scene.connections.add(context.deserialize(jsonNodeConnections, InputLinksState::class.java)) }
+            for (jsonNodeConnections in jsonConnections) {
+                scene.connections.add(context.deserialize(jsonNodeConnections, InputLinksState::class.java))
+                println(jsonConnections)
+            }
             scene
         }
     }
@@ -204,8 +194,8 @@ class SceneSerializer: JsonSerializer<Scene> {
         }
 
         result.addProperty("currentId", src.getId().toInt())
-        result.add("connections", connections)
         result.add("nodes", nodes)
+        result.add("connections", connections)
 
         return result
     }
