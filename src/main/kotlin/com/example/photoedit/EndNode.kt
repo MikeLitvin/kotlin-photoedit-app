@@ -25,7 +25,7 @@ class EndNode(nodeState: DataFormat, linkState: DataFormat, id: UInt): BaseImage
 
         nodeName.text = "End Node"
 
-        input = InputLink(SwingFXUtils.fromFXImage(image.image, null), this)
+        input = InputLink(image.image?.let { SwingFXUtils.fromFXImage(image.image, null) }, this)
 
         input.onDragDropped = linkDragDroppedHandler
         input.valueProperty.addListener { _, _, newValue ->

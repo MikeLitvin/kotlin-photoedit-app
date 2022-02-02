@@ -31,9 +31,7 @@ import java.lang.reflect.Type
             return null
         }
 
-        fun getId(): UInt {
-            return currentId.also { currentId += 1u }
-        }
+        fun getId(): UInt { return currentId.also { currentId += 1u } }
 
         fun save(): String {
             val gson = GsonBuilder()
@@ -159,9 +157,7 @@ class NodeSerializer: JsonSerializer<NodeState> {
             }
             result.add("value", context!!.serialize(writableImage))
         }
-        if (src.value is Int || src.value is String || src.value is Float) {
-            result.addProperty("value", src.value.toString())
-        }
+        if (src.value is Int || src.value is String || src.value is Float) { result.addProperty("value", src.value.toString()) }
 
         return result
     }
@@ -176,16 +172,11 @@ class SceneDeserializer(val nodeState: DataFormat, val linkState: DataFormat): J
             val currentId = jo.get("currentId").asInt.toUInt()
             val scene = Scene(nodeState, linkState, currentId)
             val nodes = jo.get("nodes").asJsonArray
-            for(node in nodes) {
-                scene.add(context.deserialize(node, Node::class.java))
-            }
+            for(node in nodes) { scene.add(context.deserialize(node, Node::class.java)) }
 
             val jsonConnections = jo.getAsJsonArray("connections")
 
-            for (jsonNodeConnections in jsonConnections) {
-                scene.connections.add(context.deserialize(jsonNodeConnections, InputLinksState::class.java))
-
-            }
+            for (jsonNodeConnections in jsonConnections) { scene.connections.add(context.deserialize(jsonNodeConnections, InputLinksState::class.java)) }
             scene
         }
     }
@@ -207,9 +198,7 @@ class SceneSerializer: JsonSerializer<Scene> {
             val nodeConnections = node.connectedLinks
             for (connection in nodeConnections) {
                 val currentConnections = mutableListOf<LinkKey<Int, Int>>()
-                currentConnections.add(
-                    LinkKey(connection.source.id.toInt(), node.linkInputs.indexOf(connection.destination))
-                )
+                currentConnections.add(LinkKey(connection.source.id.toInt(), node.linkInputs.indexOf(connection.destination)))
                 connections.add(context.serialize(InputLinksState(node.id.toInt(), currentConnections)))
             }
         }
