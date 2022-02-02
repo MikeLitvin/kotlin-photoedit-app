@@ -6,7 +6,7 @@ import javafx.scene.input.DataFormat
 import org.opencv.core.Mat
 import org.opencv.imgproc.Imgproc
 
-class Gray(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
+class Gray(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id) {
 
     @FXML
     override fun setTitle() { nodeName.text = "Gray Filter" }
@@ -14,6 +14,7 @@ class Gray(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
     override fun initialize() {
         super.initialize()
         inputs = mapOf()
+        initInputs()
     }
 
     override fun filterFunction(img: Image): Image {
@@ -22,4 +23,8 @@ class Gray(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
         Imgproc.cvtColor(tmpMat, resultMat, Imgproc.COLOR_RGB2GRAY)
         return matToImage(resultMat)
     }
+
+    override fun initType(): String = GrayFilterNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage)) }
 }

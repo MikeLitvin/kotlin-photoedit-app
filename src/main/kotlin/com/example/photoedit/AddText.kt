@@ -6,8 +6,9 @@ import javafx.scene.image.Image
 import javafx.scene.input.DataFormat
 import java.awt.Color
 import java.awt.Font
+import java.awt.image.BufferedImage
 
-class AddText(node: DataFormat, link: DataFormat): Filter(node, link) {
+class AddText(node: DataFormat, link: DataFormat, id: UInt): Filter(node, link, id) {
     private lateinit var x: InputLink<Int?>
     private lateinit var y: InputLink<Int?>
     private lateinit var fontSize: InputLink<Int?>
@@ -18,11 +19,12 @@ class AddText(node: DataFormat, link: DataFormat): Filter(node, link) {
 
     override fun initialize() {
         super.initialize()
-        x = InputLink(null)
-        y = InputLink(null)
-        text = InputLink(null)
-        fontSize = InputLink(null)
+        x = InputLink(null, this)
+        y = InputLink(null, this)
+        text = InputLink(null, this)
+        fontSize = InputLink(null, this)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"), Pair(text, "Text"), Pair(fontSize, "Size"))
+        initInputs()
         addInputs(3)
         bindInputs()
     }
@@ -36,4 +38,8 @@ class AddText(node: DataFormat, link: DataFormat): Filter(node, link) {
         graphics.drawString(text.valueProperty.value!!, x.valueProperty.value!!, y.valueProperty.value!!)
         return SwingFXUtils.toFXImage(bufferedImage, null)
     }
+
+    override fun initType(): String = AddTextNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage, x, y, text)) }
 }

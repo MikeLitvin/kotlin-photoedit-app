@@ -6,7 +6,7 @@ import javafx.scene.image.Image
 import javafx.scene.input.DataFormat
 import java.awt.Color
 
-class Invert(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
+class Invert(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id) {
 
     @FXML
     override fun setTitle() { nodeName.text = "Invert" }
@@ -14,6 +14,7 @@ class Invert(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, li
     override fun initialize() {
         super.initialize()
         inputs = mapOf()
+        initInputs()
     }
 
     override fun filterFunction(img: Image): Image {
@@ -28,4 +29,8 @@ class Invert(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, li
         }
         return SwingFXUtils.toFXImage(bufferedImage, null)
     }
+
+    override fun initType(): String = InvertNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage)) }
 }

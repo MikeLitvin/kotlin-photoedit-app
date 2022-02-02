@@ -1,5 +1,6 @@
 package com.example.photoedit
 
+import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
 import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
@@ -12,7 +13,7 @@ class Prerender(parent: EndNode): AnchorPane() {
         imageView.isPreserveRatio = true
         this.children.add(imageView)
         StackPane.setAlignment(imageView, Pos.CENTER)
-        imageView.image = parent.valueProperty.value
-        parent.valueProperty.addListener { _, _, newValue -> imageView.image = newValue }
+        imageView.image = SwingFXUtils.toFXImage(parent.valueProperty.value, null)
+        parent.valueProperty.addListener { _, _, newValue -> imageView.image = SwingFXUtils.toFXImage(newValue, null) }
     }
 }

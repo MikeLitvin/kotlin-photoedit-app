@@ -3,6 +3,7 @@ package com.example.photoedit
 import javafx.embed.swing.SwingFXUtils
 import javafx.fxml.FXML
 import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.scene.control.Button
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -11,9 +12,12 @@ import java.io.IOException
 import javax.imageio.ImageIO
 import javafx.scene.input.DataFormat
 import javafx.scene.layout.RowConstraints
+import java.awt.image.BufferedImage
 
-class EndNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeState, linkState) {
+class EndNode(nodeState: DataFormat, linkState: DataFormat, id: UInt): BaseImageNode(nodeState, linkState, id) {
     private var prerender: Prerender? = null
+
+    lateinit var input: InputLink<BufferedImage>
 
     @FXML
     override fun initialize() {
@@ -21,23 +25,21 @@ class EndNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeS
 
         nodeName.text = "End Node"
 
-        val input = InputLink(image.image)
+        input = InputLink(SwingFXUtils.fromFXImage(image.image, null), this)
+
         input.onDragDropped = linkDragDroppedHandler
         input.valueProperty.addListener { _, _, newValue ->
             valueProperty.value = newValue
-            image.image = newValue
+            image.image = SwingFXUtils.toFXImage(newValue, null)
         }
         grid.add(input, 0, 2)
         grid.children.remove(deleteButton)
         val saveButton = Button("Save As")
         grid.rowConstraints.add(RowConstraints(100.0))
         grid.add(saveButton, 1, 3)
-        saveButton.setOnAction {
-            saveAs()
-        }
-        image.setOnMouseClicked {
-            openPrerender()
-        }
+        saveButton.setOnAction { saveAs() }
+        image.setOnMouseClicked { openPrerender() }
+        initInputs()
     }
 
     private fun openPrerender() {
@@ -61,7 +63,14 @@ class EndNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeS
             file = File(file.parentFile, file.nameWithoutExtension + ".png")
         }
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(valueProperty.value!!, null), "png", file)
+            ImageIO.write(valueProperty.value, "png", file)
         } catch (exception: IOException) { exception.printStackTrace() }
     }
+
+    override fun initOutput() {}
+
+
+    override fun initType(): String = EndNodeType
+    override fun initInputs() { linkInputs.add(input) }
+
 }

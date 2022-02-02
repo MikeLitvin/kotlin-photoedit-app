@@ -7,7 +7,7 @@ import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 
-class Sepia(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
+class Sepia(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id) {
     private lateinit var mSepiaKernel: Mat
 
     @FXML
@@ -20,6 +20,7 @@ class Sepia(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, lin
         mSepiaKernel.put(2, 0, /* B */0.393, 0.769, 0.189, 0.0)
         mSepiaKernel.put(3, 0, /* A */0.000, 0.000, 0.000, 1.0)
         inputs = mapOf()
+        initInputs()
     }
 
     override fun filterFunction(img: Image): Image {
@@ -28,4 +29,8 @@ class Sepia(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, lin
         Core.transform(bufMat, resultMat, mSepiaKernel)
         return matToImage(resultMat)
     }
+
+    override fun initType(): String = SepiaNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage)) }
 }

@@ -12,7 +12,7 @@ import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
 
-class Rotation(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+class Rotation(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id){
     private lateinit var angle: InputLink<Float?>
 
     @FXML
@@ -20,8 +20,9 @@ class Rotation(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, 
 
     override fun initialize() {
         super.initialize()
-        angle = InputLink(null)
+        angle = InputLink(null, this)
         inputs = mapOf(Pair(angle, "Angle"))
+        initInputs()
         addInputs(3)
         bindInputs()
     }
@@ -42,4 +43,8 @@ class Rotation(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, 
         rotateOp.filter(bufferedImage, rotatedImage)
         return SwingFXUtils.toFXImage(rotatedImage, null)
     }
+
+    override fun initType(): String = RotationNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage, angle)) }
 }

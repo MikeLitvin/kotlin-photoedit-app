@@ -8,9 +8,11 @@ import javafx.scene.input.DataFormat
 import javafx.scene.layout.RowConstraints
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
-open class ImageNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNode(nodeState, linkState) {
+open class ImageNode(nodeState: DataFormat, linkState: DataFormat, id: UInt): BaseImageNode(nodeState, linkState, id) {
+    lateinit var imageOutput: OutLink<BufferedImage>
     @FXML
     override fun initialize() {
         super.initialize()
@@ -21,13 +23,26 @@ open class ImageNode(nodeState: DataFormat, linkState: DataFormat): BaseImageNod
         grid.add(openButton, 1, 3)
         openButton.setOnAction {
             val img = importImage()
-            valueProperty.set(img)
-            image.image = valueProperty.value
+            valueProperty.set(SwingFXUtils.fromFXImage(img, null))
+            image.image = img
         }
-        val output = OutLink<Image>()
-        output.onDragDetected = linkDragDetectedHandler
-        grid.add(output, 2, 2)
+        imageOutput = OutLink()
+        imageOutput.onDragDetected = linkDragDetectedHandler
+        initOutput()
+        grid.add(imageOutput, 2, 2)
+
+        valueProperty.addListener {
+                _, _, newValue ->
+            newValue.let {
+                image.image = SwingFXUtils.toFXImage(newValue, null)
+            }
+        }
     }
+
+    override fun initType(): String = ImageNodeType
+    override fun initInputs() {}
+
+    override fun initOutput() { output = imageOutput }
 
     private fun importImage(): Image {
         val fileChooser = FileChooser()

@@ -7,6 +7,7 @@ module com.example.photoedit {
     requires opencv;
     requires java.desktop;
     requires javafx.swing;
+    requires com.google.gson;
 
     opens com.example.photoedit to javafx.fxml;
     exports com.example.photoedit;

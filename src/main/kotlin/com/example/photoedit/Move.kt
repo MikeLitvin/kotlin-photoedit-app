@@ -7,7 +7,7 @@ import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.imgproc.Imgproc
 
-class Move(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+class Move(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id){
     private lateinit var x: InputLink<Float?>
     private lateinit var y: InputLink<Float?>
 
@@ -16,9 +16,10 @@ class Move(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
 
     override fun initialize() {
         super.initialize()
-        x = InputLink(null)
-        y = InputLink(null)
+        x = InputLink(null, this)
+        y = InputLink(null, this)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"))
+        initInputs()
         addInputs(3)
         bindInputs()
     }
@@ -31,4 +32,9 @@ class Move(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
         Imgproc.warpAffine(mat, mat, translateMat, mat.size())
         return matToImage(mat)
     }
+
+    override fun initType(): String = MoveNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage, x, y)) }
+
 }

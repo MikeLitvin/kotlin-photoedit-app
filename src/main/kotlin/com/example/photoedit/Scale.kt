@@ -9,7 +9,7 @@ import java.awt.image.AffineTransformOp
 import java.awt.image.BufferedImage
 import kotlin.math.floor
 
-class Scale(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState){
+class Scale(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id){
     private lateinit var x: InputLink<Float?>
     private lateinit var y: InputLink<Float?>
 
@@ -18,9 +18,10 @@ class Scale(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, lin
 
     override fun initialize() {
         super.initialize()
-        x = InputLink(null)
-        y = InputLink(null)
+        x = InputLink(null, this)
+        y = InputLink(null, this)
         inputs = mapOf(Pair(x, "x"), Pair(y, "y"))
+        initInputs()
         addInputs(3)
         bindInputs()
     }
@@ -36,4 +37,8 @@ class Scale(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, lin
         scaledImage = scaleOp.filter(bufferedImage, scaledImage)
         return SwingFXUtils.toFXImage(scaledImage, null)
     }
+
+    override fun initType(): String = ScaleNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage, x, y)) }
 }

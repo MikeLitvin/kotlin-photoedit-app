@@ -6,8 +6,8 @@ import javafx.scene.control.TextField
 import javafx.scene.input.DataFormat
 import kotlin.String
 
-abstract class Edit<T>(nodeState: DataFormat, linkState: DataFormat, private val validatorRegex: Regex):
-    ValueNode<T>(nodeState, linkState, FXMLLoader(Edit::class.java.getResource("editor.fxml"))) {
+abstract class Edit<T>(nodeState: DataFormat, linkState: DataFormat, id: UInt, private val validatorRegex: Regex):
+    ValueNode<T>(nodeState, linkState, id, FXMLLoader(Edit::class.java.getResource("editor.fxml"))) {
     protected lateinit var toOutput: OutLink<T>
 
     @FXML
@@ -31,5 +31,12 @@ abstract class Edit<T>(nodeState: DataFormat, linkState: DataFormat, private val
             }
         }
     }
+    override fun load(_x: Double, _y: Double, _value: T?) {
+        super.load(_x, _y, _value)
+        editField.textProperty().set(_value.toString())
+    }
+
+    override fun initOutput() { output = toOutput }
+
     abstract fun toValue(text: String): T
 }

@@ -12,7 +12,7 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import java.io.ByteArrayInputStream
 
-class Blur(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, linkState) {
+class Blur(nodeState: DataFormat, linkState: DataFormat, id: UInt): Filter(nodeState, linkState, id) {
     private lateinit var kernelSizeValue: InputLink<Int?>
 
     @FXML
@@ -20,8 +20,9 @@ class Blur(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
 
     override fun initialize() {
         super.initialize()
-        kernelSizeValue = InputLink(null)
+        kernelSizeValue = InputLink(null, this)
         inputs = mapOf(Pair(kernelSizeValue, "Kernel size"))
+        initInputs()
         addInputs(3)
         bindInputs()
     }
@@ -34,6 +35,10 @@ class Blur(nodeState: DataFormat, linkState: DataFormat): Filter(nodeState, link
         Imgproc.GaussianBlur(src, res, Size(kernelSize.toDouble(), kernelSize.toDouble()), 0.0)
         return matToImage(res)
     }
+
+    override fun initType(): String = BlurNodeType
+
+    override fun initInputs() { linkInputs.addAll(listOf(inputImage, kernelSizeValue))}
 }
 
 
